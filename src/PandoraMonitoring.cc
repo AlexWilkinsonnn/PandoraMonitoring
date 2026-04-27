@@ -377,6 +377,14 @@ TEveElement *PandoraMonitoring::VisualizeMCParticles(const MCParticleList *const
             const float parentEnergy{pPandoraParentMCParticle->GetEnergy()};
             sstr << "\nParent PDG=" << parentPDG << "\nParent E=" << parentEnergy;
             sstrName << "/Parent_PDG=" << parentPDG << "/Parent_E=" << parentEnergy;
+            if (!pPandoraParentMCParticle->IsRootParticle() && pPandoraParentMCParticle->GetParentList().size() == 1)
+            {
+                const MCParticle *const pPandoraGrandParentMCParticle{pPandoraParentMCParticle->GetParentList().front()};
+                const int grandParentPDG{pPandoraGrandParentMCParticle->GetParticleId()};
+                const float grandParentEnergy{pPandoraGrandParentMCParticle->GetEnergy()};
+                sstr << "\nGrandparent PDG=" << grandParentPDG << "\nGrandparent E=" << grandParentEnergy;
+                sstrName << "/Grandparent_PDG=" << grandParentPDG << "/Grandparent_E=" << grandParentEnergy;
+            }
         }
 
         // Create particle path
